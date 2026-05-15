@@ -28,7 +28,6 @@ import { FormField } from './components/FormField';
 import { Input } from './components/Input';
 import { Textarea } from './components/Textarea';
 import { Select } from './components/Select';
-import { Toggle } from './components/Toggle';
 import { Checkbox } from './components/Checkbox';
 import { Button } from './components/Button';
 import { AmenityChip } from './components/AmenityChip';
@@ -66,17 +65,11 @@ export default function App() {
   const [phone, setPhone] = useState('');
   const [openingTime, setOpeningTime] = useState('');
   const [closingTime, setClosingTime] = useState('');
-  const [minSpend, setMinSpend] = useState('');
-  const [policyDescription, setPolicyDescription] = useState('');
-  const [maxSessionDuration, setMaxSessionDuration] = useState('');
-  const [specialNotes, setSpecialNotes] = useState('');
 
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [customAmenity, setCustomAmenity] = useState('');
   const [customAmenities, setCustomAmenities] = useState<string[]>([]);
-  const [purchaseRequired, setPurchaseRequired] = useState(false);
-  const [reservationRequired, setReservationRequired] = useState(false);
 
   const [savedVenue, setSavedVenue] = useState<VenueData | null>(null);
   const [showOutput, setShowOutput] = useState(false);
@@ -204,14 +197,6 @@ export default function App() {
         }),
         ...customAmenities,
       ],
-      policies: {
-        purchaseRequired,
-        minSpend: purchaseRequired ? minSpend : undefined,
-        policyDescription: purchaseRequired ? policyDescription : undefined,
-        reservationRequired,
-        maxSessionDuration,
-        specialNotes,
-      },
       seatingConfigs,
       status,
       savedAt: new Date().toISOString(),
@@ -596,76 +581,7 @@ export default function App() {
             </div>
           </SectionCard>
 
-          {/* Section 6: Venue Policies */}
-          <SectionCard
-            title="Venue Policies"
-            description="Define terms, conditions, and requirements"
-          >
-            <div className="space-y-6">
-              <div className="rounded-xl border border-[#25476a]/10 bg-[#25476a]/[0.03] p-5">
-                <Toggle
-                  checked={purchaseRequired}
-                  onChange={setPurchaseRequired}
-                  label="Purchase Required"
-                />
-
-                {purchaseRequired && (
-                  <div className="mt-4 pl-2 space-y-4 border-l-4 border-[#feb139]">
-                    <FormField label="Minimum Spend Amount (KES)" required>
-                      <Input
-                        type="number"
-                        placeholder="500"
-                        value={minSpend}
-                        onChange={(e) => setMinSpend(e.target.value)}
-                      />
-                    </FormField>
-                    <FormField label="Policy Description">
-                      <Textarea
-                        placeholder="e.g., Each learner must purchase at least one beverage"
-                        rows={3}
-                        value={policyDescription}
-                        onChange={(e) => setPolicyDescription(e.target.value)}
-                      />
-                    </FormField>
-                  </div>
-                )}
-              </div>
-
-              <div className="rounded-xl border border-[#25476a]/10 bg-[#25476a]/[0.03] p-5">
-                <Toggle
-                  checked={reservationRequired}
-                  onChange={setReservationRequired}
-                  label="Reservation Required"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField label="Maximum Session Duration">
-                  <Select
-                    value={maxSessionDuration}
-                    onChange={(e) => setMaxSessionDuration(e.target.value)}
-                  >
-                    <option value="">Select duration</option>
-                    <option value="1">1 hour</option>
-                    <option value="2">2 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="4">4 hours</option>
-                    <option value="unlimited">Unlimited</option>
-                  </Select>
-                </FormField>
-
-                <FormField label="Notes / Special Instructions">
-                  <Input
-                    placeholder="e.g., Only available after 6 PM"
-                    value={specialNotes}
-                    onChange={(e) => setSpecialNotes(e.target.value)}
-                  />
-                </FormField>
-              </div>
-            </div>
-          </SectionCard>
-
-          {/* Section 7: Seating & Pricing Configurations */}
+          {/* Section 6: Seating & Pricing Configurations */}
           <SectionCard
             title="Spaces, Capacity & Pricing"
             description="Define each bookable seating option, its capacity, reservation rules, and pricing model"
