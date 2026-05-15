@@ -31,14 +31,24 @@ export function VenueCard({ venue, onClick, onEdit }: VenueCardProps) {
   };
 
   const getPriceSummary = () => {
+    if (venue.seatingConfigs.some((config) => config.pricingType === 'custom-quote')) {
+      return 'Custom quote available';
+    }
+
     const paidConfigs = venue.seatingConfigs
       .filter((config) => config.amount && Number(config.amount) > 0)
       .map((config) => Number(config.amount));
 
     if (paidConfigs.length === 0) {
-      return venue.seatingConfigs.some((config) => config.pricingType === 'free-with-purchase')
-        ? 'Free with purchase'
-        : 'Pricing not set';
+      const freeWithPurchase = venue.seatingConfigs.find(
+        (config) => config.pricingType === 'free-with-purchase'
+      );
+
+      if (freeWithPurchase?.minimumSpend) {
+        return `Min spend KES ${Number(freeWithPurchase.minimumSpend).toLocaleString()}`;
+      }
+
+      return freeWithPurchase ? 'Free with purchase' : 'Pricing not set';
     }
 
     return `From KES ${Math.min(...paidConfigs).toLocaleString()}`;

@@ -54,10 +54,14 @@ export interface VenueData {
   seatingConfigs: Array<{
     id: string;
     name: string;
+    spaceType?: string;
     minCapacity: string;
     maxCapacity: string;
     pricingType: string;
     amount: string;
+    priceUnit?: string;
+    minimumSpend?: string;
+    isReservable?: boolean;
     notes: string;
   }>;
   status: 'draft' | 'published';
@@ -79,10 +83,51 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
   const getPricingTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
       hourly: 'Hourly',
+      'per-person': 'Per Person',
       fixed: 'Fixed Session',
+      'half-day': 'Half Day',
+      'full-day': 'Full Day',
       'free-with-purchase': 'Free with Purchase',
+      'custom-quote': 'Custom Quote',
     };
     return labels[type] || type;
+  };
+
+  const getSpaceTypeLabel = (type?: string) => {
+    const labels: Record<string, string> = {
+      desk: 'Desk',
+      table: 'Table',
+      room: 'Private Room',
+      'open-area': 'Open Area',
+      outdoor: 'Outdoor Space',
+      other: 'Other',
+    };
+    return type ? labels[type] || type : 'Space type not set';
+  };
+
+  const getPriceUnitLabel = (unit?: string) => {
+    const labels: Record<string, string> = {
+      hour: 'per hour',
+      person: 'per person',
+      session: 'per session',
+      'half-day': 'per half day',
+      day: 'per day',
+    };
+    return unit ? labels[unit] || unit : '';
+  };
+
+  const getPriceDisplay = (config: VenueData['seatingConfigs'][number]) => {
+    if (config.pricingType === 'free-with-purchase') {
+      return config.minimumSpend
+        ? `Min spend KES ${Number(config.minimumSpend).toLocaleString()}`
+        : 'Free with purchase';
+    }
+
+    if (config.pricingType === 'custom-quote') {
+      return 'Custom quote';
+    }
+
+    return `KES ${Number(config.amount || 0).toLocaleString()}`;
   };
 
   const getVenueTypeLabel = (type: string) => {
@@ -380,7 +425,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
             <section>
               <h2 className="text-[#25476a] mb-4 flex items-center gap-2">
                 <Users className="w-6 h-6" />
-                Seating & Pricing Configurations
+                Spaces, Capacity & Pricing
               </h2>
               <div className="space-y-4">
                 {venue.seatingConfigs.map((config, index) => (
@@ -391,27 +436,36 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <h3 className="text-[#25476a] text-lg">{config.name || `Configuration ${index + 1}`}</h3>
-                        <div className="flex items-center gap-2 mt-1">
+                        <div className="mt-1 flex flex-wrap items-center gap-2">
+                          <span className="px-3 py-1 bg-[#38aae1]/10 text-[#25476a] rounded-full text-sm">
+                            {getSpaceTypeLabel(config.spaceType)}
+                          </span>
                           <span className="px-3 py-1 bg-[#feb139]/20 text-[#25476a] rounded-full text-sm">
                             {getPricingTypeLabel(config.pricingType)}
+                          </span>
+                          <span className={`px-3 py-1 rounded-full text-sm ${
+                            config.isReservable === false
+                              ? 'bg-slate-100 text-slate-600'
+                              : 'bg-green-50 text-green-700'
+                          }`}>
+                            {config.isReservable === false ? 'Walk-in only' : 'Reservable'}
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-2xl font-semibold text-[#25476a]">
-                          {config.pricingType === 'free-with-purchase' ? (
-                            'Free*'
-                          ) : (
-                            <>KES {config.amount || '0'}</>
-                          )}
+                          {getPriceDisplay(config)}
                         </div>
-                        {config.pricingType === 'hourly' && (
-                          <div className="text-sm text-gray-600">per hour</div>
+                        {config.pricingType !== 'free-with-purchase' &&
+                          config.pricingType !== 'custom-quote' && (
+                          <div className="text-sm text-gray-600">
+                            {getPriceUnitLabel(config.priceUnit)}
+                          </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                       <div>
                         <label className="text-xs text-gray-600 block mb-1">Min Capacity</label>
                         <div className="flex items-center gap-1 text-gray-800">
@@ -424,6 +478,13 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                         <div className="flex items-center gap-1 text-gray-800">
                           <Users className="w-4 h-4" />
                           <span>{config.maxCapacity || '0'}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-600 block mb-1">Pricing Model</label>
+                        <div className="flex items-center gap-1 text-gray-800">
+                          <DollarSign className="w-4 h-4" />
+                          <span>{getPricingTypeLabel(config.pricingType)}</span>
                         </div>
                       </div>
                     </div>
