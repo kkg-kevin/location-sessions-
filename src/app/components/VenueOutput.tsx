@@ -5,13 +5,10 @@ import {
   Phone,
   Mail,
   Clock,
-  Calendar,
   DollarSign,
   CheckCircle2,
-  FileText,
   User,
   Globe,
-  AlertCircle,
   Users,
   X,
   Download,
@@ -43,14 +40,6 @@ export interface VenueData {
     availableDays: string[];
   };
   amenities: string[];
-  policies: {
-    purchaseRequired: boolean;
-    minSpend?: string;
-    policyDescription?: string;
-    reservationRequired: boolean;
-    maxSessionDuration: string;
-    specialNotes: string;
-  };
   seatingConfigs: Array<{
     id: string;
     name: string;
@@ -361,63 +350,6 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                 ) : (
                   <p className="text-gray-500">No amenities selected</p>
                 )}
-              </div>
-            </section>
-
-            {/* Policies */}
-            <section>
-              <h2 className="text-[#25476a] mb-4 flex items-center gap-2">
-                <FileText className="w-6 h-6" />
-                Venue Policies
-              </h2>
-              <div className="space-y-4">
-                {venue.policies.purchaseRequired && (
-                  <div className="bg-[#feb139]/10 border-l-4 border-[#feb139] rounded-lg p-5">
-                    <div className="flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-[#feb139] mt-0.5" />
-                      <div className="flex-1">
-                        <h3 className="text-[#25476a] mb-2">Purchase Required</h3>
-                        {venue.policies.minSpend && (
-                          <p className="text-gray-700 mb-1">
-                            Minimum Spend: <strong>KES {venue.policies.minSpend}</strong>
-                          </p>
-                        )}
-                        {venue.policies.policyDescription && (
-                          <p className="text-gray-600 text-sm">{venue.policies.policyDescription}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {venue.policies.reservationRequired && (
-                  <div className="bg-[#38aae1]/10 border-l-4 border-[#38aae1] rounded-lg p-5">
-                    <div className="flex items-start gap-3">
-                      <Calendar className="w-5 h-5 text-[#38aae1] mt-0.5" />
-                      <div>
-                        <h3 className="text-[#25476a]">Reservation Required</h3>
-                        <p className="text-gray-600 text-sm">Prior booking is mandatory for this venue</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="bg-gray-50 rounded-lg p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm text-gray-600 block mb-1">Max Session Duration</label>
-                    <p className="text-gray-800">
-                      {venue.policies.maxSessionDuration
-                        ? `${venue.policies.maxSessionDuration} hour(s)`
-                        : 'Unlimited'}
-                    </p>
-                  </div>
-                  {venue.policies.specialNotes && (
-                    <div>
-                      <label className="text-sm text-gray-600 block mb-1">Special Notes</label>
-                      <p className="text-gray-800">{venue.policies.specialNotes}</p>
-                    </div>
-                  )}
-                </div>
               </div>
             </section>
 
