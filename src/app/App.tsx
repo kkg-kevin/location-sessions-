@@ -34,6 +34,7 @@ import { Button } from './components/Button';
 import { AmenityChip } from './components/AmenityChip';
 import { SeatingConfigCard, SeatingConfig } from './components/SeatingConfigCard';
 import { VenueOutput, VenueData } from './components/VenueOutput';
+import { VenueCard } from './components/VenueCard';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -79,6 +80,7 @@ export default function App() {
 
   const [savedVenue, setSavedVenue] = useState<VenueData | null>(null);
   const [showOutput, setShowOutput] = useState(false);
+  const [showVenueDetails, setShowVenueDetails] = useState(false);
 
   const [seatingConfigs, setSeatingConfigs] = useState<SeatingConfig[]>([
     {
@@ -201,18 +203,75 @@ export default function App() {
 
     setSavedVenue(venueData);
     setShowOutput(true);
+    setShowVenueDetails(false);
   };
 
   const handleCloseOutput = () => {
-    setShowOutput(false);
+    setShowVenueDetails(false);
   };
 
   const handleEditVenue = () => {
     setShowOutput(false);
+    setShowVenueDetails(false);
   };
 
   if (showOutput && savedVenue) {
-    return <VenueOutput venue={savedVenue} onClose={handleCloseOutput} onEdit={handleEditVenue} />;
+    return (
+      <div className="min-h-screen bg-[linear-gradient(180deg,#f7fbff_0%,#eef7fb_45%,#ffffff_100%)] text-slate-800">
+        <div className="relative overflow-hidden bg-[#25476a] text-white shadow-lg shadow-[#25476a]/20">
+          <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#feb139] via-[#38aae1] to-[#feb139]" />
+          <div className="mx-auto max-w-7xl px-5 py-8 sm:px-6 lg:py-10">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-sm text-white/90">
+                  <Building2 className="h-4 w-4 text-[#feb139]" />
+                  Saved venue preview
+                </div>
+                <h1 className="text-3xl text-white">Venues</h1>
+                <p className="mt-1 max-w-2xl text-white/75">
+                  Users can scan compact venue cards and open the full venue information when
+                  they need more detail.
+                </p>
+              </div>
+              <Button variant="secondary" onClick={handleEditVenue}>
+                <Plus className="mr-2 h-5 w-5" />
+                Add or Edit Venue
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <main className="mx-auto max-w-7xl px-5 py-8 sm:px-6">
+          <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-[#25476a]">Available Venues</h2>
+              <p className="text-sm text-slate-500">
+                Compact cards keep the browsing view manageable as more venues are added.
+              </p>
+            </div>
+            <span className="rounded-full bg-[#38aae1]/10 px-3 py-1 text-sm font-medium text-[#25476a]">
+              1 venue saved
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <VenueCard
+              venue={savedVenue}
+              onClick={() => setShowVenueDetails(true)}
+              onEdit={handleEditVenue}
+            />
+          </div>
+        </main>
+
+        {showVenueDetails && (
+          <VenueOutput
+            venue={savedVenue}
+            onClose={handleCloseOutput}
+            onEdit={handleEditVenue}
+          />
+        )}
+      </div>
+    );
   }
 
   return (
