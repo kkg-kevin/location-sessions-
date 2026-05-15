@@ -13,13 +13,13 @@ export function AmenityChip({ label, icon, selected, onClick }: AmenityChipProps
     <button
       type="button"
       onClick={onClick}
-      className={`relative flex items-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${
+      className={`relative flex min-h-14 items-center gap-3 rounded-lg border px-4 py-3 text-left shadow-sm transition-all hover:-translate-y-0.5 ${
         selected
-          ? 'border-[#38aae1] bg-[#38aae1]/5'
-          : 'border-gray-200 hover:border-gray-300 bg-white'
+          ? 'border-[#38aae1] bg-[#38aae1]/10 shadow-[#38aae1]/10'
+          : 'border-slate-200 bg-white hover:border-[#38aae1]/50 hover:bg-[#38aae1]/5'
       }`}
     >
-      <div className={selected ? 'text-[#38aae1]' : 'text-gray-500'}>
+      <div className={selected ? 'text-[#38aae1]' : 'text-[#25476a]/55'}>
         {icon}
       </div>
       <span className={`text-sm ${selected ? 'text-[#25476a]' : 'text-gray-700'}`}>

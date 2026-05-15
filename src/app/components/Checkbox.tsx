@@ -9,7 +9,11 @@ interface CheckboxProps {
 
 export function Checkbox({ checked, onChange, label }: CheckboxProps) {
   return (
-    <label className="flex items-center cursor-pointer group">
+    <label className={`group flex cursor-pointer items-center rounded-lg border px-3 py-2.5 transition-all ${
+      checked
+        ? 'border-[#38aae1]/40 bg-[#38aae1]/10'
+        : 'border-slate-200 bg-white hover:border-[#38aae1]/40'
+    }`}>
       <div className="relative">
         <input
           type="checkbox"
@@ -21,7 +25,7 @@ export function Checkbox({ checked, onChange, label }: CheckboxProps) {
           className={`w-5 h-5 border-2 rounded transition-all ${
             checked
               ? 'bg-[#38aae1] border-[#38aae1]'
-              : 'bg-white border-gray-300 group-hover:border-gray-400'
+              : 'bg-white border-slate-300 group-hover:border-[#38aae1]'
           }`}
         >
           {checked && (
@@ -29,7 +33,7 @@ export function Checkbox({ checked, onChange, label }: CheckboxProps) {
           )}
         </div>
       </div>
-      <span className="ml-3 text-gray-700">{label}</span>
+      <span className="ml-3 text-sm text-slate-700">{label}</span>
     </label>
   );
 }

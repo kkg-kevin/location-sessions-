@@ -99,11 +99,12 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 overflow-y-auto">
-      <div className="min-h-screen py-8 px-4">
-        <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-2xl">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#25476a]/70 backdrop-blur-sm">
+      <div className="min-h-screen px-4 py-8">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl shadow-[#25476a]/30">
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#25476a] to-[#38aae1] text-white p-8 rounded-t-xl">
+          <div className="relative bg-gradient-to-r from-[#25476a] to-[#38aae1] p-6 text-white sm:p-8">
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-[#feb139]" />
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -117,7 +118,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                       Published
                     </span>
                   )}
-                  <span className="text-gray-200 text-sm">
+                  <span className="text-sm text-white/75">
                     Saved on {new Date(venue.savedAt).toLocaleString()}
                   </span>
                 </div>
@@ -129,7 +130,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
               </div>
               <button
                 onClick={onClose}
-                className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+                className="rounded-lg p-2 text-white transition-colors hover:bg-white/20"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -137,8 +138,8 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
           </div>
 
           {/* Action Bar */}
-          <div className="border-b border-gray-200 bg-gray-50 px-8 py-4 flex items-center justify-between">
-            <div className="flex gap-3">
+          <div className="flex items-center justify-between border-b border-[#25476a]/10 bg-[#25476a]/[0.03] px-5 py-4 sm:px-8">
+            <div className="flex flex-wrap gap-3">
               <Button variant="outline" size="sm" onClick={onEdit}>
                 <Edit className="w-4 h-4 mr-2" />
                 Edit Venue
@@ -155,14 +156,14 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
           </div>
 
           {/* Content */}
-          <div className="p-8 space-y-8">
+          <div className="space-y-8 p-5 sm:p-8">
             {/* Basic Information */}
             <section>
               <h2 className="text-[#25476a] mb-4 flex items-center gap-2">
                 <Building2 className="w-6 h-6" />
                 Basic Information
               </h2>
-              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
+              <div className="space-y-4 rounded-xl border border-slate-200 bg-slate-50 p-6">
                 <div>
                   <label className="text-sm text-gray-600 block mb-1">Description</label>
                   <p className="text-gray-800">
@@ -193,7 +194,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                   <MapPin className="w-6 h-6" />
                   Location
                 </h2>
-                <div className="bg-gradient-to-br from-[#38aae1]/5 to-[#38aae1]/10 border border-[#38aae1]/20 rounded-lg p-6 space-y-3">
+                <div className="space-y-3 rounded-xl border border-[#38aae1]/20 bg-gradient-to-br from-[#38aae1]/5 to-[#38aae1]/10 p-6">
                   <div>
                     <label className="text-sm text-gray-600 block mb-1">Address</label>
                     <p className="text-gray-800">{venue.location.address || 'Not provided'}</p>
@@ -227,7 +228,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                   <User className="w-6 h-6" />
                   Contact Information
                 </h2>
-                <div className="bg-gradient-to-br from-[#feb139]/5 to-[#feb139]/10 border border-[#feb139]/20 rounded-lg p-6 space-y-3">
+                <div className="space-y-3 rounded-xl border border-[#feb139]/20 bg-gradient-to-br from-[#feb139]/5 to-[#feb139]/10 p-6">
                   <div>
                     <label className="text-sm text-gray-600 block mb-1">Contact Person</label>
                     <p className="text-gray-800">{venue.contact.personName || 'Not provided'}</p>
@@ -262,7 +263,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                 <Clock className="w-6 h-6" />
                 Operational Hours
               </h2>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                   <div>
                     <label className="text-sm text-gray-600 block mb-1">Opening Time</label>
@@ -299,7 +300,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                 <CheckCircle2 className="w-6 h-6" />
                 Amenities & Facilities
               </h2>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-6">
                 {venue.amenities.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
                     {venue.amenities.map((amenity) => (
@@ -385,7 +386,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                 {venue.seatingConfigs.map((config, index) => (
                   <div
                     key={config.id}
-                    className="bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-lg p-6 hover:border-[#38aae1]/30 transition-colors"
+                    className="rounded-xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 transition-all hover:border-[#38aae1]/40 hover:shadow-md hover:shadow-[#25476a]/10"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div>
@@ -428,7 +429,7 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
                     </div>
 
                     {config.notes && (
-                      <div className="bg-white border border-gray-200 rounded p-3">
+                      <div className="rounded-lg border border-slate-200 bg-white p-3">
                         <label className="text-xs text-gray-600 block mb-1">Notes</label>
                         <p className="text-gray-700 text-sm">{config.notes}</p>
                       </div>
@@ -440,8 +441,8 @@ export function VenueOutput({ venue, onClose, onEdit }: VenueOutputProps) {
           </div>
 
           {/* Footer */}
-          <div className="border-t border-gray-200 bg-gray-50 px-8 py-6 rounded-b-xl">
-            <div className="flex justify-between items-center">
+          <div className="border-t border-[#25476a]/10 bg-[#25476a]/[0.03] px-5 py-6 sm:px-8">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-gray-600">
                 This venue configuration can be edited at any time
               </p>
