@@ -89,32 +89,6 @@ export default function App() {
       isReservable: true,
       notes: '',
     },
-    {
-      id: '2',
-      name: 'Group Table',
-      spaceType: 'table',
-      minCapacity: '5',
-      maxCapacity: '10',
-      pricingType: 'hourly',
-      amount: '1500',
-      priceUnit: 'hour',
-      minimumSpend: '',
-      isReservable: true,
-      notes: '',
-    },
-    {
-      id: '3',
-      name: 'Cafe Seating',
-      spaceType: 'table',
-      minCapacity: '1',
-      maxCapacity: '4',
-      pricingType: 'free-with-purchase',
-      amount: '0',
-      priceUnit: '',
-      minimumSpend: '500',
-      isReservable: false,
-      notes: 'Coffee purchase required',
-    },
   ]);
 
   const toggleDay = (day: string) => {
@@ -165,6 +139,27 @@ export default function App() {
 
   const deleteSeatingConfig = (id: string) => {
     setSeatingConfigs(seatingConfigs.filter((config) => config.id !== id));
+  };
+
+  const getTimeValue = (time: string) => time.replace(/\s?(AM|PM)$/i, '');
+
+  const getTimePeriod = (time: string) => (time.toUpperCase().endsWith('PM') ? 'PM' : 'AM');
+
+  const updateTimeValue = (
+    currentValue: string,
+    nextTime: string,
+    setter: (value: string) => void
+  ) => {
+    setter(nextTime ? `${nextTime} ${getTimePeriod(currentValue)}` : '');
+  };
+
+  const updateTimePeriod = (
+    currentValue: string,
+    nextPeriod: string,
+    setter: (value: string) => void
+  ) => {
+    const time = getTimeValue(currentValue);
+    setter(time ? `${time} ${nextPeriod}` : '');
   };
 
   const handleSave = (status: 'draft' | 'published') => {
@@ -467,42 +462,40 @@ export default function App() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <FormField label="Opening Time" required helper="Select time in 12-hour format">
-                <div className="grid grid-cols-2 gap-3">
-                  <Input
+                <div className="flex overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all focus-within:border-[#38aae1] focus-within:ring-2 focus-within:ring-[#38aae1]/30 hover:border-[#38aae1]/50">
+                  <input
                     type="time"
-                    value={openingTime}
-                    onChange={(e) => setOpeningTime(e.target.value)}
+                    value={getTimeValue(openingTime)}
+                    onChange={(e) => updateTimeValue(openingTime, e.target.value, setOpeningTime)}
+                    className="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-slate-800 focus:outline-none"
                   />
-                  <Select
-                    value={openingTime.includes('PM') ? 'PM' : 'AM'}
-                    onChange={(e) => {
-                      const time = openingTime.replace(/\s?(AM|PM)/, '');
-                      setOpeningTime(`${time} ${e.target.value}`);
-                    }}
+                  <select
+                    value={getTimePeriod(openingTime)}
+                    onChange={(e) => updateTimePeriod(openingTime, e.target.value, setOpeningTime)}
+                    className="border-l border-slate-200 bg-[#25476a]/[0.03] px-3 py-2.5 text-sm font-medium text-[#25476a] focus:outline-none"
                   >
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
-                  </Select>
+                  </select>
                 </div>
               </FormField>
 
               <FormField label="Closing Time" required helper="Select time in 12-hour format">
-                <div className="grid grid-cols-2 gap-3">
-                  <Input
+                <div className="flex overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all focus-within:border-[#38aae1] focus-within:ring-2 focus-within:ring-[#38aae1]/30 hover:border-[#38aae1]/50">
+                  <input
                     type="time"
-                    value={closingTime}
-                    onChange={(e) => setClosingTime(e.target.value)}
+                    value={getTimeValue(closingTime)}
+                    onChange={(e) => updateTimeValue(closingTime, e.target.value, setClosingTime)}
+                    className="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-slate-800 focus:outline-none"
                   />
-                  <Select
-                    value={closingTime.includes('PM') ? 'PM' : 'AM'}
-                    onChange={(e) => {
-                      const time = closingTime.replace(/\s?(AM|PM)/, '');
-                      setClosingTime(`${time} ${e.target.value}`);
-                    }}
+                  <select
+                    value={getTimePeriod(closingTime)}
+                    onChange={(e) => updateTimePeriod(closingTime, e.target.value, setClosingTime)}
+                    className="border-l border-slate-200 bg-[#25476a]/[0.03] px-3 py-2.5 text-sm font-medium text-[#25476a] focus:outline-none"
                   >
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
-                  </Select>
+                  </select>
                 </div>
               </FormField>
             </div>
