@@ -216,22 +216,58 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#f7fbff_0%,#eef7fb_45%,#ffffff_100%)] text-slate-800">
       {/* Header */}
-      <div className="bg-[#25476a] text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="flex items-center gap-3">
-            <Building2 className="w-8 h-8" />
-            <h1 className="text-white">Add Venue / Location</h1>
+      <div className="relative overflow-hidden bg-[#25476a] text-white shadow-lg shadow-[#25476a]/20">
+        <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#feb139] via-[#38aae1] to-[#feb139]" />
+        <div className="mx-auto max-w-7xl px-5 py-8 sm:px-6 lg:py-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-sm text-white/90">
+                <MapPin className="h-4 w-4 text-[#feb139]" />
+                Venue onboarding
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
+                  <Building2 className="h-7 w-7 text-[#feb139]" />
+                </div>
+                <div>
+                  <h1 className="text-3xl text-white">Add Venue / Location</h1>
+                  <p className="mt-1 text-white/75">
+                    Capture venue details for mentorship learning sessions.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3 lg:min-w-[520px]">
+              <div className="rounded-xl border border-white/15 bg-white/10 px-4 py-3">
+                <div className="flex items-center gap-2 text-white/65">
+                  <Clock className="h-4 w-4 text-[#38aae1]" />
+                  Schedule
+                </div>
+                <p className="mt-1 font-medium text-white">Hours and days</p>
+              </div>
+              <div className="rounded-xl border border-white/15 bg-white/10 px-4 py-3">
+                <div className="flex items-center gap-2 text-white/65">
+                  <Wifi className="h-4 w-4 text-[#38aae1]" />
+                  Amenities
+                </div>
+                <p className="mt-1 font-medium text-white">Facilities and access</p>
+              </div>
+              <div className="rounded-xl border border-white/15 bg-white/10 px-4 py-3">
+                <div className="flex items-center gap-2 text-white/65">
+                  <Phone className="h-4 w-4 text-[#38aae1]" />
+                  Contact
+                </div>
+                <p className="mt-1 font-medium text-white">Owner details</p>
+              </div>
+            </div>
           </div>
-          <p className="text-gray-200 mt-2">
-            Create a new venue for mentorship learning sessions
-          </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="mx-auto max-w-7xl px-5 py-8 sm:px-6">
         <div className="space-y-6">
           {/* Section 1: Basic Information */}
           <SectionCard
@@ -273,10 +309,12 @@ export default function App() {
 
             <div className="mt-6">
               <FormField label="Venue Photos" helper="Upload images of the venue (JPG, PNG)">
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#38aae1] transition-colors cursor-pointer">
-                  <Upload className="w-8 h-8 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600">Click to upload or drag and drop</p>
-                  <p className="text-xs text-gray-500 mt-1">Maximum file size: 5MB</p>
+                <div className="cursor-pointer rounded-xl border border-dashed border-[#38aae1]/50 bg-[#38aae1]/5 p-8 text-center transition-all hover:border-[#38aae1] hover:bg-[#38aae1]/10">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-sm">
+                    <Upload className="h-6 w-6 text-[#38aae1]" />
+                  </div>
+                  <p className="font-medium text-[#25476a]">Click to upload or drag and drop</p>
+                  <p className="mt-1 text-xs text-slate-500">Maximum file size: 5MB</p>
                 </div>
               </FormField>
             </div>
@@ -314,12 +352,14 @@ export default function App() {
 
               {/* Map Preview Placeholder */}
               <div className="mt-4">
-                <label className="block text-gray-700 mb-2">Map Preview</label>
-                <div className="bg-gray-100 border border-gray-300 rounded-lg h-64 flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <Map className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                    <p>Map preview will appear here</p>
-                    <p className="text-xs mt-1">Requires Google Maps API integration</p>
+                <label className="mb-2 block text-sm font-medium text-[#25476a]">Map Preview</label>
+                <div className="flex h-64 items-center justify-center rounded-xl border border-[#25476a]/10 bg-[linear-gradient(135deg,rgba(56,170,225,0.12),rgba(254,177,57,0.12))]">
+                  <div className="text-center text-slate-500">
+                    <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm">
+                      <Map className="h-7 w-7 text-[#38aae1]" />
+                    </div>
+                    <p className="font-medium text-[#25476a]">Map preview will appear here</p>
+                    <p className="mt-1 text-xs">Requires Google Maps API integration</p>
                   </div>
                 </div>
               </div>
@@ -440,7 +480,7 @@ export default function App() {
 
             {/* Custom Amenities */}
             <div className="mt-6 pt-6 border-t border-gray-200">
-              <label className="block text-gray-700 mb-3">Add Custom Amenity</label>
+              <label className="mb-3 block text-sm font-medium text-[#25476a]">Add Custom Amenity</label>
               <div className="flex gap-3">
                 <Input
                   placeholder="e.g., Standing Desks, Pet Friendly"
@@ -464,7 +504,7 @@ export default function App() {
                   {customAmenities.map((amenity) => (
                     <span
                       key={amenity}
-                      className="px-3 py-2 bg-[#feb139]/20 text-[#25476a] rounded-lg text-sm flex items-center gap-2 border border-[#feb139]/30"
+                      className="flex items-center gap-2 rounded-lg border border-[#feb139]/30 bg-[#feb139]/20 px-3 py-2 text-sm text-[#25476a]"
                     >
                       {amenity}
                       <button
@@ -487,7 +527,7 @@ export default function App() {
             description="Define terms, conditions, and requirements"
           >
             <div className="space-y-6">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
+              <div className="rounded-xl border border-[#25476a]/10 bg-[#25476a]/[0.03] p-5">
                 <Toggle
                   checked={purchaseRequired}
                   onChange={setPurchaseRequired}
@@ -516,7 +556,7 @@ export default function App() {
                 )}
               </div>
 
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
+              <div className="rounded-xl border border-[#25476a]/10 bg-[#25476a]/[0.03] p-5">
                 <Toggle
                   checked={reservationRequired}
                   onChange={setReservationRequired}
@@ -580,8 +620,8 @@ export default function App() {
         </div>
 
         {/* Bottom Actions */}
-        <div className="sticky bottom-0 bg-white border-t-2 border-gray-200 shadow-xl rounded-t-xl mt-8 p-6">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 justify-end">
+        <div className="sticky bottom-0 mt-8 rounded-t-2xl border border-[#25476a]/10 bg-white/95 p-4 shadow-2xl shadow-[#25476a]/15 backdrop-blur sm:p-5">
+          <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:justify-end">
             <Button variant="outline" size="lg">
               <X className="w-5 h-5 mr-2 inline-block" />
               Cancel

@@ -8,7 +8,7 @@ interface ToggleProps {
 
 export function Toggle({ checked, onChange, label }: ToggleProps) {
   return (
-    <label className="flex items-center cursor-pointer group">
+    <label className="group flex cursor-pointer items-center">
       <div className="relative">
         <input
           type="checkbox"
@@ -17,18 +17,18 @@ export function Toggle({ checked, onChange, label }: ToggleProps) {
           onChange={(e) => onChange(e.target.checked)}
         />
         <div
-          className={`block w-12 h-6 rounded-full transition-colors ${
-            checked ? 'bg-[#38aae1]' : 'bg-gray-300'
+          className={`block h-7 w-12 rounded-full transition-colors ${
+            checked ? 'bg-[#38aae1]' : 'bg-slate-300 group-hover:bg-slate-400'
           }`}
         ></div>
         <div
-          className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${
-            checked ? 'transform translate-x-6' : ''
+          className={`absolute left-1 top-1 h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${
+            checked ? 'translate-x-5' : ''
           }`}
         ></div>
       </div>
       {label && (
-        <span className="ml-3 text-gray-700">{label}</span>
+        <span className="ml-3 text-sm font-medium text-[#25476a]">{label}</span>
       )}
     </label>
   );

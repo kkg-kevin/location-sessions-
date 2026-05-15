@@ -28,12 +28,12 @@ export function SeatingConfigCard({ config, onChange, onDelete, showDelete }: Se
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-lg p-5 relative hover:border-[#38aae1]/30 transition-colors">
+    <div className="relative rounded-xl border border-slate-200 bg-gradient-to-br from-[#25476a]/[0.03] to-white p-5 transition-all hover:border-[#38aae1]/40 hover:shadow-md hover:shadow-[#25476a]/10">
       {showDelete && (
         <button
           type="button"
           onClick={onDelete}
-          className="absolute top-4 right-4 text-red-500 hover:text-red-700 transition-colors"
+          className="absolute right-4 top-4 rounded-lg p-2 text-red-500 transition-colors hover:bg-red-50 hover:text-red-700"
           title="Delete configuration"
         >
           <Trash2 className="w-5 h-5" />
