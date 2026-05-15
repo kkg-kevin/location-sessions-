@@ -86,28 +86,40 @@ export default function App() {
     {
       id: '1',
       name: 'Small Desk',
+      spaceType: 'desk',
       minCapacity: '1',
       maxCapacity: '2',
       pricingType: 'hourly',
       amount: '300',
+      priceUnit: 'hour',
+      minimumSpend: '',
+      isReservable: true,
       notes: '',
     },
     {
       id: '2',
       name: 'Group Table',
+      spaceType: 'table',
       minCapacity: '5',
       maxCapacity: '10',
       pricingType: 'hourly',
       amount: '1500',
+      priceUnit: 'hour',
+      minimumSpend: '',
+      isReservable: true,
       notes: '',
     },
     {
       id: '3',
       name: 'Cafe Seating',
+      spaceType: 'table',
       minCapacity: '1',
       maxCapacity: '4',
       pricingType: 'free-with-purchase',
       amount: '0',
+      priceUnit: '',
+      minimumSpend: '500',
+      isReservable: false,
       notes: 'Coffee purchase required',
     },
   ]);
@@ -139,10 +151,14 @@ export default function App() {
     const newConfig: SeatingConfig = {
       id: Date.now().toString(),
       name: '',
+      spaceType: '',
       minCapacity: '',
       maxCapacity: '',
       pricingType: '',
       amount: '',
+      priceUnit: '',
+      minimumSpend: '',
+      isReservable: true,
       notes: '',
     };
     setSeatingConfigs([...seatingConfigs, newConfig]);
@@ -651,8 +667,8 @@ export default function App() {
 
           {/* Section 7: Seating & Pricing Configurations */}
           <SectionCard
-            title="Seating & Pricing Configurations"
-            description="Define capacity tiers and pricing structures for different seating arrangements"
+            title="Spaces, Capacity & Pricing"
+            description="Define each bookable seating option, its capacity, reservation rules, and pricing model"
           >
             <div className="space-y-4">
               {seatingConfigs.map((config) => (
